@@ -1,7 +1,7 @@
 import fs from 'fs';
 import airdrop from "./airdrop.js";
 import TelegramBot from 'node-telegram-bot-api';
-const token = '5613362744:AAEgqGw0z5qdTD6KcvbirUJVkAaeb1TvZWM';
+const token = '';
 const bot = new TelegramBot(token, { polling: true });
 
 // load the questions from an external file
@@ -22,8 +22,13 @@ bot.onText(/\/airdropme/, async msg => {
   const username = msg.from.username;
   const firstName = msg.from.first_name;
     // send message asking user to check their DMs
-    await bot.sendMessage(chatId, `${firstName}, please check your DMs for a message from me.`);
-  // if there is no current question, send a new one
+    await bot.sendMessage(chatId, `${firstName}, please check your DMs for a message from me. Or click this link: https://t.me/meerkbot`);
+  //send a message telling the user to answer a few questions
+  bot.sendMessage(userId, 'Before I ask the wallet address for your airdrop I need you to answer a few questions. You need to get at least 3 right!');
+
+
+  
+    // if there is no current question, send a new one
   if (!currentQuestion) {
     // select a random question from the questions array
     currentQuestion = questions[Math.floor(Math.random() * questions.length)];
@@ -81,7 +86,7 @@ bot.on('callback_query', async (query) => {
     // check to see if you got more than 3 answers right , if so ask for your airdrop adress
     if (correctAnswer > 3) {
 
-      bot.sendMessage(userId, 'You got more than 3 answers right, what is your Wallet Adddress?');
+      bot.sendMessage(userId, 'Perfect! You got more than 3 answers right');
       await airdrop(bot,query.message);
     };
 
