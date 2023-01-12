@@ -1,7 +1,7 @@
 import fs from 'fs';
 import airdrop from "./airdrop.js";
 import TelegramBot from 'node-telegram-bot-api';
-const token = '5613362744:AAH283d6vGq3jMaR12jQzB0ncUOopGNfN5E';
+const token = '';
 const bot = new TelegramBot(token, { polling: true });
 
 // load the questions from an external file
@@ -12,7 +12,6 @@ const userData = {};
 
 // listen for the /trivia command and send a random question to the user
 bot.onText(/\/airdropme/, async (msg) => {
-   
   const chatId = msg.chat.id;
   const userId = msg.from.id;
   const username = msg.from.username;

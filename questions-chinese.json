@@ -1,0 +1,29 @@
+[
+    
+  {
+    "question": "TrustEVM 主网发布时间是什么时候？",
+    "answers": ["3月", "7月", "最终", "2023"],
+    "correctAnswer": "3月"
+  },    
+{
+      "question": "TrustEVM最像什么？",
+      "answers": ["以太坊", "EOS", "瑞波币", "莱特币"],
+      "correctAnswer": "以太坊"
+    },
+    {
+      "question": "TrustEVM的第一个Swap是什么？",
+      "answers": ["Uniswap", "TrustSwap", "TacoSwap", "MtGox"],
+      "correctAnswer": "TrustSwap"
+    },
+    {
+      "question": "EOS EVM 区块链的名称是什么？",
+      "answers": ["Uniswap", "TrustEVM", "Avax", "MtGox"],
+      "correctAnswer": "TrustEVM"
+    },
+    {
+      "question": "哪种加密货币以其智能合约功能而闻名？",
+      "answers": ["比特币", "莱特币", "以太坊", "瑞波币"],
+      "correctAnswer": "以太坊"
+    }
+
+]

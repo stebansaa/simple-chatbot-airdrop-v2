@@ -1,0 +1,29 @@
+[
+    
+  {
+    "question": "TrustEVM 메인넷 출시일은 언제입니까?",
+    "answers": ["3월", "7월", "최종", "2023"],
+    "correctAnswer": "3월"
+  },    
+{
+      "question": "TrustEVM은 무엇과 더 유사합니까?",
+      "answers": ["이더리움", "EOS", "리플", "라이트코인"],
+      "correctAnswer": "이더리움"
+    },
+    {
+      "question": "TrustEVM의 첫번째 Swap은 무엇입니까?",
+      "answers": ["유니스워프", "TrustSwap", "TacoSwap", "MtGox"],
+      "correctAnswer": "TrustSwap"
+    },
+    {
+      "question": "EOS EVM 블록체인의 이름은 무엇입니까?",
+      "answers": ["유니스워프", "TrustEVM", "Avax", "MtGox"],
+      "correctAnswer": "TrustEVM"
+    },
+    {
+      "question": "스마트 계약 기능으로 알려진 암호화폐는 무엇입니까?",
+      "answers": ["비트코인", "라이트코인", "이더리움", "리플"],
+      "correctAnswer": "이더리움"
+    }
+
+]
