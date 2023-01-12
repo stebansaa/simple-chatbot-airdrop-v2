@@ -1,96 +1,88 @@
 import fs from 'fs';
 import airdrop from "./airdrop.js";
 import TelegramBot from 'node-telegram-bot-api';
-const token = '';
+const token = '5613362744:AAH283d6vGq3jMaR12jQzB0ncUOopGNfN5E';
 const bot = new TelegramBot(token, { polling: true });
 
 // load the questions from an external file
 const questions = JSON.parse(fs.readFileSync('questions.json'));
 
-// global variable to store the current question
-let currentQuestion;
-let oldQuestion;
-
-// global variable to set get the number of correct questions
-let correctAnswer = 0;
+// global object to store the current question and progress of each user
+const userData = {};
 
 // listen for the /trivia command and send a random question to the user
-// bot.onText(/\/trivia/, (msg) => {
-bot.onText(/\/airdropme/, async msg => {
+bot.onText(/\/airdropme/, async (msg) => {
+   
   const chatId = msg.chat.id;
   const userId = msg.from.id;
   const username = msg.from.username;
   const firstName = msg.from.first_name;
     // send message asking user to check their DMs
-    await bot.sendMessage(chatId, `${firstName}, please check your DMs for a message from me. Or click this link: https://t.me/meerkbot`);
+    await bot.sendMessage(chatId, `${firstName}, Thank you for helping test the Airdropme function! please check your DMs for a message from me. Or click this link: https://t.me/meerkbot`);
   //send a message telling the user to answer a few questions
   bot.sendMessage(userId, 'Before I ask the wallet address for your airdrop I need you to answer a few questions. You need to get at least 3 right!');
 
-
+  // if the user does not have an entry in the userData object, initialize one
+//  if (!userData[userId]) {
+    userData[userId] = {
+      correctAnswerCount: 0,
+      currentQuestion: null,
+    }
+  // }
   
-    // if there is no current question, send a new one
-  if (!currentQuestion) {
+  // if there is no current question, send a new one
+  if (!userData[userId].currentQuestion) {
     // select a random question from the questions array
-    currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+    userData[userId].currentQuestion = questions[Math.floor(Math.random() * questions.length)];
 
     // create an inline keyboard with buttons for each possible answer
-    const keyboard = currentQuestion.answers.map((a) => [{ text: a, callback_data: a }]);
+    const keyboard = userData[userId].currentQuestion.answers.map((a) => [{ text: a, callback_data: a }]);
     const replyMarkup = {
       inline_keyboard: keyboard,
     };
 
     // send the question to the user with the inline keyboard
-    bot.sendMessage(userId, currentQuestion.question, { reply_markup: replyMarkup });
+    bot.sendMessage(userId, userData[userId].currentQuestion.question, { reply_markup: replyMarkup }).then(sentMessage => {
+      userData[userId].messageId = sentMessage.message_id;
+    });
   }
 });
 
 // listen for answers to trivia questions and check if they are correct
 bot.on('callback_query', async (query) => {
+  // Declare user-specific variables
   const userId = query.message.chat.id;
   const answer = query.data;
-  const messageId = query.message.message_id;
-
+  
+  // check if the user have an entry in the userData object
+  if (!userData[userId]) return;
   // check if the answer is correct
-  if (!currentQuestion) return ;
-  const isCorrect = answer === currentQuestion.correctAnswer;
+  const isCorrect = answer === userData[userId].currentQuestion.correctAnswer;
   if (isCorrect) {
-
-    // increment a counter
-    correctAnswer++; // num is now 1
-
-    // send a message saying that it is correc!
-    // bot.sendMessage(chatId, 'Correct!' + correctAnswer);
-    // update the current question with a new one
-    // but make sure is not the same as previous one
-    oldQuestion = currentQuestion;
-
-    while (oldQuestion == currentQuestion) {
-
-      currentQuestion = questions[Math.floor(Math.random() * questions.length)];
-
-    };
-
-
-
-    // create an inline keyboard with buttons for the new question
-    const keyboard = currentQuestion.answers.map((a) => [{ text: a, callback_data: a }]);
-    const replyMarkup = {
-      inline_keyboard: keyboard,
-    };
-
-    // edit the message to show the new question with the inline keyboard
-    bot.editMessageText(currentQuestion.question, { chat_id: userId, message_id: messageId, reply_markup: replyMarkup });
-  } else {
-    // end the game if the answer is incorrect
-    bot.sendMessage(userId, 'Game over! The correct answer was: ' + currentQuestion.correctAnswer);
-    // check to see if you got more than 3 answers right , if so ask for your airdrop adress
-    if (correctAnswer > 3) {
-
-      bot.sendMessage(userId, 'Perfect! You got more than 3 answers right');
-      await airdrop(bot,query.message);
-    };
-
-    correctAnswer = 0;
-    currentQuestion = null;
+  userData[userId].correctAnswerCount++;
+  // update the current question with a new one
+  // but make sure is not the same as previous one
+  let oldQuestion = userData[userId].currentQuestion;
+  while (oldQuestion == userData[userId].currentQuestion) {
+  userData[userId].currentQuestion = questions[Math.floor(Math.random() * questions.length)];
   }
-});
+  // create an inline keyboard with buttons for the new question
+  const keyboard = userData[userId].currentQuestion.answers.map((a) => [{ text: a, callback_data: a }]);
+  const replyMarkup = {
+  inline_keyboard: keyboard,
+  };
+  // edit the message to show the new question with the inline keyboard
+  bot.editMessageText(userData[userId].currentQuestion.question, { chat_id: userId, message_id: userData[userId].messageId, reply_markup: replyMarkup });
+  } else {
+  bot.sendMessage(userId, 'Incorrect. The correct answer was: ' + userData[userId].currentQuestion.correctAnswer);
+  }
+  
+  if (userData[userId].correctAnswerCount >= 3) {
+  bot.sendMessage(userId, 'Perfect! You got 3 answers right. Please enter the wallet address where you want to receive your airdrop:');
+  await airdrop(bot,query.message);
+  userData[userId].correctAnswerCount = 0;
+  userData[userId].currentQuestion = null;
+  } else if (userData[userId].correctAnswerCount > 0 && userData[userId].correctAnswerCount < 3) {
+  bot.sendMessage(userId, 'You have ' + userData[userId].correctAnswerCount + ' correct answers. Keep going! ☝️');
+  }
+  });

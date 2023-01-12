@@ -24,7 +24,7 @@ export default async function airdrop(bot,msg){
             const date = new Date();
             const time = date.toLocaleTimeString();
             // save date, time, username, and name in DB if you want to ...
-            fs.appendFileSync('message.txt', `✅ Ok, you are all set! The date is ${date},  your username is ${username}, and your wallet address is ${name}.`);
+            fs.appendFileSync('message.txt', `✅ Ok, you are all set! The date is ${date},  your username is ${username}, and your wallet address is ${name}. \r\n`);
             await bot.sendMessage(chatId, `✅ Ok, you are all set! The date is ${date},  your username is ${username}, you wallet address was stored.`);
             // delete the user prompt message
            // We dont need to do this anymore await bot.deleteMessage(userId, namePrompt.message_id);

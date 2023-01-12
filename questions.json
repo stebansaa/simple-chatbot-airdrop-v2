@@ -6,63 +6,23 @@
         "correctAnswer": "March"
       },    
     {
-          "question": "What is the best cryptocurrency?",
-          "answers": ["Bitcoin", "EOS", "Ripple", "Litecoin"],
-          "correctAnswer": "EOS"
+          "question": "What is TrustEVM more like?",
+          "answers": ["Ethereum", "EOS", "Ripple", "Litecoin"],
+          "correctAnswer": "Ethereum"
         },
         {
-          "question": "Where is Trimbot?",
-          "answers": ["Vacation", "Gym", "trolling GlueDog", "visiting GF"],
-          "correctAnswer": "Vacation"
-        },
-        {
-          "question": "What is the best Swap for TrustEVM?",
+          "question": "What is the first Swap for TrustEVM?",
           "answers": ["Uniswap", "TrustSwap", "TacoSwap", "MtGox"],
           "correctAnswer": "TrustSwap"
+        },
+        {
+          "question": "What is the name of EOS EVM Blokchain?",
+          "answers": ["Uniswap", "TrustEVM", "Avax", "MtGox"],
+          "correctAnswer": "TrustEVM"
         },
         {
           "question": "Which cryptocurrency is known for its smart contract capabilities?",
           "answers": ["Bitcoin", "Litecoin", "Ethereum", "Ripple"],
           "correctAnswer": "Ethereum"
-        },
-        {
-            "question": "What is the unit of force?",
-            "answers": ["Newton", "Joule", "Watt", "Coulomb"],
-            "correctAnswer": "Newton"
-            },
-            {
-            "question": "What is the formula for kinetic energy?",
-            "answers": ["E = mc^2", "E = mv^2/2", "E = p^2/2m", "E = Fd"],
-            "correctAnswer": "E = mv^2/2"
-            },
-            {
-            "question": "Which of these is a type of wave?",
-            "answers": ["Sound", "Light", "Mass", "Electricity"],
-            "correctAnswer": "Sound"
-            },
-            {
-                "question": "What is the capital of France?",
-                "answers": ["Paris", "London", "New York", "Sydney"],
-                "correctAnswer": "Paris"
-                },
-                {
-                "question": "What is the currency of Japan?",
-                "answers": ["Yen", "Dollar", "Euro", "Pound"],
-                "correctAnswer": "Yen"
-                },
-                {
-                "question": "What is the tallest mountain in the solar system?",
-                "answers": ["Mount Everest", "Mount Kilimanjaro", "Olympus Mons", "Mount Fuji"],
-                "correctAnswer": "Olympus Mons"
-                },
-                {
-                "question": "Which planet has the most moons?",
-                "answers": ["Jupiter", "Mars", "Earth", "Saturn"],
-                "correctAnswer": "Jupiter"
-                },
-                {
-                "question": "What is the chemical symbol for gold?",
-                "answers": ["Au", "Ag", "Cu", "Pt"],
-                "correctAnswer": "Au"
-                }
+        }
 ]
